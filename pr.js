@@ -3,7 +3,7 @@ async function createFIDOKey(KeyName, requireLargeBlobSupport = false,)
 {
   try 
   {
-    const publicKeyCredential = await createCredential(/*setPaymentExtension=*/ true, /*optionalOverrides=*/ buildEnrollExtensions(requireLargeBlobSupport),);
+    const publicKeyCredential = await createCredential(buildEnrollExtensions(requireLargeBlobSupport),);
     window.localStorage.setItem(KeyName, arrayBufferToBase64(publicKeyCredential.rawId));
     info(
         'Enrolled: ' + objectToString(publicKeyCredential) + '\n' +
