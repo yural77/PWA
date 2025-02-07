@@ -5,7 +5,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Демо УЭК Keychain в PWA</title>
-  <link rel="icon" href="/favicon.ico">
   <style>
     /* Общие стили */
     body {
@@ -79,7 +78,7 @@
            maxlength="255">
     
     <!-- Кнопки -->
-    <button onclick="createPaymentCredential('Credential #1', true)">
+    <button onclick="createFIDOKey('Credential #1', true)">
       Создать ключ
     </button>
     
@@ -100,6 +99,11 @@
   <script src="util.js"></script>
   <script src="spc_util.js"></script>
   <script src="pr.js"></script>
-  <script src="redirect.js"></script>
+  <script>
+  if (window.location.protocol !== 'https:') 
+    {
+        window.location.protocol = 'https:';
+    }
+  </script>
 </body>
 </html>
