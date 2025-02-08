@@ -1,12 +1,22 @@
  /* Создать ключ WebAuthn */
-async function webAuthnCreate(KeyName, requireLargeBlobSupport = false,) 
+async function webAuthnCreate() 
 {
   const selectedOption = document.getElementById('selectedOptionField').value;
+  let LSKeyName = '';
+  if(selectedOption == 'credBlob')
+  {
+    LSKeyName = 'credBlobID';
+  }
+  else
+  {
+    LSKeyName = 'largeBlobID';
+  }
+
   console.log(selectedOption);
   try 
   {
-    const publicKeyCredential = await createCredential(buildEnrollExtensions(requireLargeBlobSupport),);
-    window.localStorage.setItem(KeyName, arrayBufferToBase64(publicKeyCredential.rawId));
+    const publicKeyCredential = await createCredential(buildEnrollExtensions(selectedOption),);
+    window.localStorage.setItem(LSKeyName, arrayBufferToBase64(publicKeyCredential.rawId));
     info(
         'Enrolled: ' + objectToString(publicKeyCredential) + '\n' +
         'Extensions: ' + extensionsOutputToString(publicKeyCredential)
@@ -22,8 +32,20 @@ async function webAuthnCreate(KeyName, requireLargeBlobSupport = false,)
 /**
  * Получает данные WebAuthn.
  */
-async function webAuthnGet(KeyName, largeBlobMode) 
+async function webAuthnGet(largeBlobMode) 
 {
+
+  const selectedOption = document.getElementById('selectedOptionField').value;
+  let LSKeyName = '';
+  if(selectedOption == 'credBlob')
+  {
+    LSKeyName = 'credBlobID';
+  }
+  else
+  {
+    LSKeyName = 'largeBlobID';
+  }
+
   try 
   {
     const publicKey = 
@@ -36,7 +58,7 @@ async function webAuthnGet(KeyName, largeBlobMode)
           transports: ['internal'],
           type: 'public-key',
           id: base64ToArray(
-              window.localStorage.getItem(KeyName)),
+              window.localStorage.getItem(LSKeyName)),
         },
       ],
       extensions: buildLoginExtensions(largeBlobMode),
@@ -63,12 +85,28 @@ const LargeBlobMode =
   Write: 'Write',
 };
 
+const CredBlobMode = 
+{
+  Read: 'Read',
+  Write: 'Write',
+};
+
 /**
  * Создает расширения для регистрации.
  */
-function buildEnrollExtensions(requireLargeBlobSupport) 
+function buildEnrollExtensions(selectedOption) 
 {
-  if (requireLargeBlobSupport) { return { largeBlob: { support: 'required', } };} 
+  // Получаем значение из текстового поля
+  const userInput = document.getElementById('secretInput').value;
+  textToWrite = userInput || 'SecretExample'; // Запасной вариант
+
+  if (selectedOption == 'largeBlob') { return { largeBlob: { support: 'required', } };} 
+
+  else if (selectedOption == 'credBlob') 
+  {
+    const buffer = new TextEncoder().encode(textToWrite);
+    return { credBlob: textToWrite };
+  }
   else { return {};}
 }
 
@@ -79,7 +117,7 @@ function buildLoginExtensions(mode, textToWrite = 'UEK Secret')
 {
   // Получаем значение из текстового поля
   const userInput = document.getElementById('secretInput').value;
-  textToWrite = userInput || 'Секрет по умолчанию'; // Запасной вариант
+  textToWrite = userInput || 'SecretExample'; // Запасной вариант
 
   if (mode === LargeBlobMode.None) { return {};} 
   else if (mode === LargeBlobMode.Write) 
@@ -90,6 +128,10 @@ function buildLoginExtensions(mode, textToWrite = 'UEK Secret')
   else if (mode === LargeBlobMode.Read) 
   {
     return { largeBlob: { read: true, } };
+  }
+  else if (extension == 'credBlob')
+  {
+    return { credBlob: true };
   }
 }
 
@@ -116,6 +158,7 @@ function extensionsOutputToString(credentialInfoAssertion)
  */
 async function createCredential(additionalExtensions) 
 {
+
     const rp = 
     {
       //id: window.location.hostname,

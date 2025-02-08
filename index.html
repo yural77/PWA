@@ -37,15 +37,15 @@
            maxlength="255" class="hidden">
     
     <!-- Кнопки (скрыты по умолчанию) -->
-    <button id="createButton" class="hidden" onclick="webAuthnCreate('Credential #1', true)">
+    <button id="createButton" class="hidden" onclick="webAuthnCreate()">
       Записать секрет
     </button>
     
-    <button id="writeButton" class="hidden" onclick="webAuthnGet('Credential #1', LargeBlobMode.Write)">
+    <button id="writeButton" class="hidden" onclick="webAuthnGet(LargeBlobMode.Write)">
       Изменить секрет
     </button>
     
-    <button id="readButton" class="hidden" onclick="webAuthnGet('Credential #1', LargeBlobMode.Read)">
+    <button id="readButton" class="hidden" onclick="webAuthnGet(LargeBlobMode.Read)">
       Прочитать секрет
     </button>
   </div>
