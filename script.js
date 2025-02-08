@@ -137,7 +137,7 @@ function buildLoginExtensions(LBmode, selectedOption, textToWrite = 'UEK Secret'
   
   else if (selectedOption == 'credBlob')
   {
-    return { credBlob: true };
+    return { getCredBlob: true };
   }
 }
 
@@ -186,7 +186,7 @@ async function createCredential(additionalExtensions)
     {
       name: 'Test User',
       displayName: '',
-      id: Uint8Array.from(String(Math.random()*999999999), c => c.charCodeAt(0)),
+      id:  Uint8Array.from(String(Math.random()*999999999), c => c.charCodeAt(0)),
     }
   
     const publicKey = 
