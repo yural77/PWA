@@ -144,7 +144,7 @@ function buildLoginExtensions(LBmode, selectedOption, textToWrite = 'UEK Secret'
   
   else if (selectedOption === 'credBlob')
   {
-    return { credBlob: true, };
+    return { getCredBlob: true, };
   }
 }
 

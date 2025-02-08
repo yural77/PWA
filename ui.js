@@ -74,7 +74,7 @@
       if (!secretInput.trim()) {
         appendToTerminal("Ошибка: Введите текст в поле ввода!", "red");
       } else {
-        appendToTerminal(`$ echo "${secretInput}" >> written.txt`);
+        //appendToTerminal(`$ echo "${secretInput}" >> written.txt`);
         appendToTerminal(`Текст записан: ${secretInput}`, "blue");
       }
     }
