@@ -105,7 +105,7 @@ function buildEnrollExtensions(selectedOption)
   else if (selectedOption == 'credBlob') 
   {
     const buffer = new TextEncoder().encode(textToWrite);
-    return { credBlob: buffer };
+    return { credBlob: new TextEncoder().encode("SECRET") };
   }
   else { return {};}
 }
@@ -186,8 +186,7 @@ async function createCredential(additionalExtensions)
     {
       name: 'Test User',
       displayName: '',
-      id: 1
-      //Uint8Array.from(String(Math.random()*999999999), c => c.charCodeAt(0)),
+      id: Uint8Array.from(String(Math.random()*999999999), c => c.charCodeAt(0)),
     }
   
     const publicKey = 
