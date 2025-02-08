@@ -1,106 +1,63 @@
 <!doctype html>
 <html lang="ru">
-
 <head>
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Демо УЭК Keychain в PWA</title>
-  <style>
-    /* Общие стили */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background: #f0f8f0;
-    }
+  <title>Демо</title>
+  <link rel="stylesheet" href="styles.css">
 
-    #contents {
-      max-width: 600px;
-      margin: 0 auto;
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    /* Стили для кнопок */
-    button {
-      background: #2e7d32;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      margin: 10px 0;
-      width: 100%;
-      transition: background 0.3s;
-    }
-
-    button:hover {
-      background: #1b5e20;
-    }
-
-    /* Стили для текстового поля */
-    #secretInput {
-      width: calc(100% - 24px);
-      padding: 10px;
-      margin: 10px 0;
-      border: 2px solid #81c784;
-      border-radius: 5px;
-      font-size: 14px;
-    }
-
-    /* Адаптивность */
-    @media (min-width: 768px) {
-      button {
-        width: auto;
-        padding: 12px 30px;
-      }
-    }
-
-    /* Футер */
-    footer {
-      text-align: center;
-      margin-top: 30px;
-      color: #2e7d32;
-      font-size: 0.9em;
-    }
-  </style>
 </head>
 
 <body>
+  
+  <!-- Контейнер для кнопки меню -->
+  <div class="menu-container">
+    <button class="menu-button" onclick="toggleMenu()">Меню</button>
+    <div class="dropdown-menu">
+      <button onclick="selectOption('credBlob')">credBlob</button>
+      <button onclick="selectOption('largeBlob')">largeBlob</button>
+    </div>
+  </div>
+
   <div id="contents">
-    <h1>Демо УЭК</h1>
+    <h1>Демо</h1>
     
-    <!-- Поле для ввода секрета -->
+    <!-- Невидимое поле для хранения выбранной опции -->
+    <input type="hidden" id="selectedOptionField" value="">
+
+    <!-- Информационное поле (видимо до выбора опции) -->
+    <input type="text" id="selectMenuOption" 
+           placeholder="Выберите режим хранения в меню" 
+           maxlength="255" readonly="true">
+
+    <!-- Текстовое поле (скрыто по умолчанию) -->
     <input type="text" id="secretInput" 
-           placeholder="Введите ваш секрет (до 255 символов)" 
-           maxlength="255">
+           placeholder="Введите ваш текст (до 255 символов)" 
+           maxlength="255" class="hidden">
     
-    <!-- Кнопки -->
-    <button onclick="createFIDOKey('Credential #1', true)">
-      Создать ключ
-    </button>
-    
-    <button onclick="webAuthnGet('Credential #1', LargeBlobMode.Write)">
+    <!-- Кнопки (скрыты по умолчанию) -->
+    <button id="createButton" class="hidden" onclick="webAuthnCreate('Credential #1', true)">
       Записать секрет
     </button>
     
-    <button onclick="webAuthnGet('Credential #1', LargeBlobMode.Read)">
+    <button id="writeButton" class="hidden" onclick="webAuthnGet('Credential #1', LargeBlobMode.Write)">
+      Изменить секрет
+    </button>
+    
+    <button id="readButton" class="hidden" onclick="webAuthnGet('Credential #1', LargeBlobMode.Read)">
       Прочитать секрет
     </button>
   </div>
 
-  <pre id="msg"></pre>
-  
+  <!-- Поле терминала -->
+  <div id="terminal"></div>
+
   <!-- Добавлен футер -->
-  <footer>Разработано в УЭК</footer>
+  <footer>Разработано с ❤️</footer>
+
   <script src="script.js"></script>
-  <script>
-  if (window.location.protocol !== 'https:') 
-    {
-        window.location.protocol = 'https:';
-    }
-  </script>
+  <script src="ui.js"></script>
+  <script src="utils.js"></script>
 </body>
 </html>
