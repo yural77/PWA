@@ -68,6 +68,13 @@ async function webAuthnGet(largeBlobMode)
         'Login: ' + objectToString(credentialInfoAssertion) + '\n' +
         'Extensions: ' + extensionsOutputToString(credentialInfoAssertion)
         );
+
+    if (credentialInfoAssertion.response && credentialInfoAssertion.response.credBlob)
+    {
+      const data = new TextDecoder().decode(credentialInfoAssertion.response.credBlob);
+      info('CREDBLOB: ' + data);
+    }
+    else {error("CREDBLOBERROR")}
   } 
   catch (err) 
   {
