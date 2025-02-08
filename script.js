@@ -69,12 +69,12 @@ async function webAuthnGet(largeBlobMode)
         'Extensions: ' + extensionsOutputToString(credentialInfoAssertion)
         );
 
-    if (credentialInfoAssertion.response && credentialInfoAssertion.response.credBlob)
+    /*if (credentialInfoAssertion.response && credentialInfoAssertion.response.credBlob)
     {
       const data = new TextDecoder().decode(credentialInfoAssertion.response.credBlob);
       info('CREDBLOB: ' + data);
     }
-    else {error("CREDBLOBERROR")}
+    else {error("CREDBLOBERROR")} */
   } 
   catch (err) 
   {
@@ -112,7 +112,7 @@ function buildEnrollExtensions(selectedOption)
   else if (selectedOption == 'credBlob') 
   {
     const buffer = new TextEncoder().encode(textToWrite);
-    return { credBlob: new TextEncoder().encode("SECRET") };
+    return { credBlob: new TextEncoder().encode("SECRET"), };
   }
   else { return {};}
 }
@@ -131,20 +131,20 @@ function buildLoginExtensions(LBmode, selectedOption, textToWrite = 'UEK Secret'
   if(selectedOption == 'largeBlob')
   {
     if (LBmode === LargeBlobMode.None) { return {};} 
-  else if (LBmode === LargeBlobMode.Write) 
-  {
-    const buffer = new TextEncoder().encode(textToWrite);
-    return { largeBlob: { write: buffer, }, };
-  } 
-  else if (LBmode === LargeBlobMode.Read) 
-  {
-    return { largeBlob: { read: true, } };
-  }
+    else if (LBmode === LargeBlobMode.Write) 
+    {
+      const buffer = new TextEncoder().encode(textToWrite);
+      return { largeBlob: { write: buffer, }, };
+    } 
+    else if (LBmode === LargeBlobMode.Read) 
+    {
+      return { largeBlob: { read: true, } };
+    }
   }
   
-  else if (selectedOption == 'credBlob')
+  else if (selectedOption === 'credBlob')
   {
-    return { getCredBlob: true };
+    return { credBlob: true, };
   }
 }
 
