@@ -105,7 +105,7 @@ function buildEnrollExtensions(selectedOption)
   else if (selectedOption == 'credBlob') 
   {
     const buffer = new TextEncoder().encode(textToWrite);
-    return { credBlob: textToWrite };
+    return { credBlob: buffer };
   }
   else { return {};}
 }
@@ -137,7 +137,7 @@ function buildLoginExtensions(LBmode, selectedOption, textToWrite = 'UEK Secret'
   
   else if (selectedOption == 'credBlob')
   {
-    return { getCredBlob: true };
+    return { credBlob: true };
   }
 }
 
@@ -167,7 +167,7 @@ async function createCredential(additionalExtensions)
 
     const rp = 
     {
-      //id: window.location.hostname,
+      id: window.location.hostname,
       name: 'UEK Demo',
     };
     const pubKeyCredParams = 
@@ -186,7 +186,8 @@ async function createCredential(additionalExtensions)
     {
       name: 'Test User',
       displayName: '',
-      id: Uint8Array.from(String(Math.random()*999999999), c => c.charCodeAt(0)),
+      id: 1
+      //Uint8Array.from(String(Math.random()*999999999), c => c.charCodeAt(0)),
     }
   
     const publicKey = 
