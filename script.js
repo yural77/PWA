@@ -61,7 +61,7 @@ async function webAuthnGet(largeBlobMode)
               window.localStorage.getItem(LSKeyName)),
         },
       ],
-      extensions: buildLoginExtensions(largeBlobMode),
+      extensions: buildLoginExtensions(largeBlobMode, selectedOption),
     };
     const credentialInfoAssertion = await navigator.credentials.get({publicKey});
     info(
@@ -113,23 +113,29 @@ function buildEnrollExtensions(selectedOption)
 /**
  * Создает расширения для входа.
  */
-function buildLoginExtensions(mode, textToWrite = 'UEK Secret') 
+function buildLoginExtensions(LBmode, selectedOption, textToWrite = 'UEK Secret') 
 {
   // Получаем значение из текстового поля
   const userInput = document.getElementById('secretInput').value;
   textToWrite = userInput || 'SecretExample'; // Запасной вариант
 
-  if (mode === LargeBlobMode.None) { return {};} 
-  else if (mode === LargeBlobMode.Write) 
+  console.log(selectedOption);
+
+  if(selectedOption == 'largeBlob')
+  {
+    if (LBmode === LargeBlobMode.None) { return {};} 
+  else if (LBmode === LargeBlobMode.Write) 
   {
     const buffer = new TextEncoder().encode(textToWrite);
     return { largeBlob: { write: buffer, }, };
   } 
-  else if (mode === LargeBlobMode.Read) 
+  else if (LBmode === LargeBlobMode.Read) 
   {
     return { largeBlob: { read: true, } };
   }
-  else if (extension == 'credBlob')
+  }
+  
+  else if (selectedOption == 'credBlob')
   {
     return { credBlob: true };
   }
