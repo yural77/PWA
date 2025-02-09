@@ -22,13 +22,17 @@ async function webAuthnCreate()
     {
       const clientExtensionResults = createdKey.getClientExtensionResults();
 
-      if(selectedOption === 'credBlob' && createdKey.response.credBlob)
+      if(selectedOption === 'credBlob')
       {
-        const data = new TextDecoder().decode(createdKey.response.credBlob);
-        PrintInfo('credBlobCreationStatus: ' + data);
-        if(data !== true) { PrintError("credBlob is not supported on this device"); }  
+        if(clientExtensionResults.largeBlob !== undefined && clientExtensionResults.largeBlob.blob !== undefined)
+        {
+          const data = new TextDecoder().decode(createdKey.response.credBlob);
+          PrintInfo('credBlobCreationStatus: ' + data);
+          if(data !== true) { PrintError("credBlob is not supported on this device"); }  
+        }
+        else {PrintError("credBlob is not supported on this device");}  
       }
-      else {PrintError("credBlob is not supported on this device");}   
+       
       
       if(selectedOption === 'largeBlob')
       {
