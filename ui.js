@@ -20,6 +20,7 @@
       const readButton = document.getElementById('readButton');
       const secretInput = document.getElementById('secretInput');
       const selectMenuOption = document.getElementById('selectMenuOption');
+      const mainHeader = document.getElementById('mainHeader');
       
 
       // Обновляем значение в невидимом поле
@@ -41,10 +42,12 @@
 
       // Показываем нужные кнопки в зависимости от выбранной опции
       if (option === 'credBlob') {
+        mainHeader.textContent = "Демо credBlob";
         createButton.textContent = "Записать секрет";
         createButton.classList.remove('hidden');
         readButton.classList.remove('hidden');
       } else if (option === 'largeBlob') {
+        mainHeader.textContent = "Демо largeBlob";
         createButton.textContent = "Создать секрет";
         createButton.classList.remove('hidden');
         writeButton.classList.remove('hidden');
@@ -62,10 +65,10 @@
       const terminal = document.getElementById('terminal');
       const timestamp = new Date().toLocaleTimeString(); // Время действия
       const line = `%c[${timestamp}] %c${message} %c\n`;
-      terminal.innerHTML += line;
-      terminal.style.cssText += `
-        --line-color: ${color};
-      `;
+      terminal.innerHTML += `<span style='color: ${color};>` + line + "</span>";
+     // terminal.style.cssText += `
+     //   --line-color: ${color};
+    //  `;
       terminal.scrollTop = terminal.scrollHeight; // Прокрутка вниз
     }
 

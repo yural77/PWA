@@ -131,6 +131,7 @@
             {
               const data = String(clientExtensionResults.largeBlob['supported']);
               PrintInfo('largeBlobCreationStatus: ' + data);
+              if(clientExtensionResults.largeBlob['supported'] !== true) { PrintError("credBlob is not supported on this device"); }  
             }
     
             else {PrintError("largeBlob is not supported on this device");}  
