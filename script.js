@@ -10,31 +10,37 @@ async function webAuthnCreate()
   console.log(selectedOption);
   try 
   {
-    const publicKeyCredential = await createCredential(buildEnrollExtensions(selectedOption),);
-    window.localStorage.setItem(LSKeyName, arrayBufferToBase64(publicKeyCredential.rawId));
+    const createdKey = await createCredential(buildEnrollExtensions(selectedOption),);
+    window.localStorage.setItem(LSKeyName, arrayBufferToBase64(createdKey.rawId));
     PrintInfo(
-        'MainKeyData: ' + objectToString(publicKeyCredential) + '\n' +
-        'Extensions: ' + extensionsOutputToString(publicKeyCredential)
+        'MainKeyData: ' + objectToString(createdKey) + '\n' +
+        'Extensions: ' + extensionsOutputToString(createdKey)
         );
 
 //Вывод в терминал
-    if(publicKeyCredential.response)
+    if(createdKey.response)
     {
-      if(selectedOption == 'credBlob' && publicKeyCredential.response.credBlob)
+      const clientExtensionResults = createdKey.getClientExtensionResults();
+
+      if(selectedOption === 'credBlob' && createdKey.response.credBlob)
       {
-        const data = new TextDecoder().decode(publicKeyCredential.response.credBlob);
+        const data = new TextDecoder().decode(createdKey.response.credBlob);
         PrintInfo('credBlobCreationStatus: ' + data);
-        if(data !== 'true') { PrintError("credBlob is not supported on this device"); }  
+        if(data !== true) { PrintError("credBlob is not supported on this device"); }  
       }
       else {PrintError("credBlob is not supported on this device");}   
       
-      if(selectedOption == 'largeBlob' && publicKeyCredential.response.largeBlob)
+      if(selectedOption === 'largeBlob')
+      {
+        if (clientExtensionResults.largeBlob !== undefined && clientExtensionResults.largeBlob.blob !== undefined)
         {
-          const data = new TextDecoder().decode(publicKeyCredential.response.largeBlob);
-          PrintInfo('largeBlobCreationStatuc: ' + data);
+          const data = new TextDecoder().decode(clientExtensionResults.largeBlob.blob['supported']);
+          PrintInfo('largeBlobCreationStatus: ' + data);
         }
-      else {PrintError("largeBlob is not supported on this device");}  
 
+        else {PrintError("largeBlob is not supported on this device");}  
+          
+      }
     }
 
     else {PrintError("Something went wrong, couldn't get authentication response");}    
