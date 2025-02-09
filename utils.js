@@ -145,7 +145,7 @@
         {
           if (KeyExtensions.largeBlob !== undefined)
           {
-            if(mode === LargeBlobMode.None)
+            if(mode === 'create')
             {
               const data = String(KeyExtensions.largeBlob['supported']);
               PrintInfo('largeBlobCreationStatus: ' + data);
