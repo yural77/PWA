@@ -8,9 +8,16 @@ async function webAuthnCreate()
   else{ LSKeyName = 'largeBlobID';}
 
   console.log(selectedOption);
+
+  let userVerificationType = 'required';
+  if (document.getElementById('isDiscouraged').value === 'false')
+  {
+    userVerificationType = 'discouraged';
+  }
+
   try 
   {
-    const createdKey = await createCredential(buildEnrollExtensions(selectedOption),);
+    const createdKey = await createCredential(buildEnrollExtensions(selectedOption), userVerificationType);
     window.localStorage.setItem(LSKeyName, arrayBufferToBase64(createdKey.rawId));
     PrintInfo(
         'MainKeyData: ' + objectToString(createdKey) + '\n' +
@@ -37,12 +44,20 @@ async function webAuthnGet(largeBlobMode)
   if(selectedOption == 'credBlob') { LSKeyName = 'credBlobID';}
   else{ LSKeyName = 'largeBlobID';}
 
+  let userVerificationType = 'required';
+  if (document.getElementById('isDiscouraged').value === 'false')
+  {
+    userVerificationType = 'discouraged';
+  }
+
+  console.log(userVerificationType);
+
   try 
   {
     const publicKey = 
     {
       challenge: new TextEncoder().encode('Authentication challenge'),
-      userVerification: 'discouraged',
+      userVerification: userVerificationType,
       allowCredentials: 
       [
         {
@@ -142,8 +157,9 @@ function extensionsOutputToString(credentialInfoAssertion)
 }
 
 
-async function createCredential(additionalExtensions) 
+async function createCredential(additionalExtensions, userVerificationType) 
 {
+    console.log(userVerificationType);
 
     const rp = 
     {
@@ -177,7 +193,7 @@ async function createCredential(additionalExtensions)
       pubKeyCredParams,
       authenticatorSelection: 
       {
-        userVerification: 'discouraged',
+        userVerification: userVerificationType,
         authenticatorAttachment: 'platform',
       },
     };

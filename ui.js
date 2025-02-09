@@ -12,6 +12,19 @@
       isMenuOpen = !isMenuOpen;
     }
 
+    function handleCheckboxChange(isChecked)
+    {
+      const isDiscouragedField = document.getElementById('isDiscouraged');
+      if(isChecked)
+      {
+        isDiscouragedField.value = 'true';
+      }
+      else {isDiscouragedField.value = 'false';}
+
+      console.log(isDiscouragedField.value);
+
+    }
+
     // Функция для выбора опции и изменения видимости элементов
     function selectOption(option) {
       document.getElementById('terminal').textContent = '';

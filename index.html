@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Демо credBlob / largeBlob</title>
   <link rel="stylesheet" href="styles.css">
-
 </head>
 
 
@@ -18,6 +17,12 @@
     <div class="dropdown-menu">
       <button onclick="selectOption('credBlob')">credBlob</button>
       <button onclick="selectOption('largeBlob')">largeBlob</button>
+      <label class="menu-checkbox">
+        <input type="checkbox" id="isDiscouragedCheckbox" onchange="handleCheckboxChange(this.checked)">
+        <span class="checkmark"></span>
+        Без FaceID
+      </label>
+      <br>
     </div>
   </div>
 
@@ -26,6 +31,9 @@
     
     <!-- Невидимое поле для хранения выбранной опции -->
     <input type="hidden" id="selectedOptionField" value="">
+
+    <!-- Невидимое поле для хранения состояния чекбокса -->
+    <input type="hidden" id="isDiscouraged" value="false">
 
     <!-- Информационное поле (видимо до выбора опции) -->
     <input type="text" id="selectMenuOption" 
