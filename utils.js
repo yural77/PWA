@@ -1,27 +1,15 @@
-/**
-   * Converts a PaymentResponse or a PublicKeyCredential into a string.
-   */
   function objectToString(input) {
     return JSON.stringify(objectToDictionary(input), null, 2);
   }
   
-  /**
-   * Converts a base64 encoded string into Unit8Array.
-   */
   function base64ToArray(input) {
     return Uint8Array.from(atob(input), c => c.charCodeAt(0))
   }
   
-  /**
-   * Converts an ArrayBuffer into a base64 encoded string.
-   */
   function arrayBufferToBase64(input) {
     return btoa(arrayBufferToString(input));
   }
   
-  /**
-   * Converts an ArrayBuffer into a string.
-   */
   function arrayBufferToString(input) {
     return String.fromCharCode(...new Uint8Array(input));
   }
@@ -79,32 +67,8 @@
     if (input.userHandle && input.userHandle.constructor === String) {
       output.userHandle = input.userHandle;
     }
-    if (input.type) {
-      output.type = input.type;
-    }
-    if (input.methodName) {
-      output.methodName = input.methodName;
-    }
-    if (input.details) {
-      output.details = objectToDictionary(input.details);
-    }
-    if (input.appid_extension) {
-      output.appid_extension = input.appid_extension;
-    }
     if (input.challenge) {
       output.challenge = input.challenge;
-    }
-    if (input.echo_appid_extension) {
-      output.echo_appid_extension = input.echo_appid_extension;
-    }
-    if (input.echo_prf) {
-      output.echo_prf = input.echo_prf;
-    }
-    if (input.prf_not_evaluated) {
-      output.prf_not_evaluated = input.prf_not_evaluated;
-    }
-    if (input.prf_results) {
-      output.prf_results = objectToDictionary(input.prf_results);
     }
     if (input.user_handle) {
       output.user_handle = input.user_handle;
@@ -115,80 +79,30 @@
     if (input.client_data_json) {
       output.client_data_json = atob(input.client_data_json);
     }
-    if (input.shippingAddress) {
-      output.shippingAddress = input.shippingAddress;
-    }
-    if (input.shippingOption) {
-      output.shippingOption = input.shippingOption;
-    }
-    if (input.payerName) {
-      output.payerName = input.payerName;
-    }
-    if (input.payerEmail) {
-      output.payerEmail = input.payerEmail;
-    }
-    if (input.payerPhone) {
-      output.payerPhone = input.payerPhone;
-    }
+
     return output;
   }
 
-
-
-///////////////////////////////////////////
-
-
-
-
-   /**
-   * Prints the given error message.
-   * @param {string} msg - The error message to print.
-   */
-   function error(msg) {  // eslint-disable-line no-unused-vars
-    /*let element = document.createElement('error_field');
-    element.innerHTML = msg;
-    element.className = 'error';
-    document.getElementById('msg').appendChild(element);*/
-
+   function PrintError(msg) 
+   { 
     const terminal = document.getElementById('terminal');
-
-    appendToTerminal(msg, "red");
+    appendToTerminal(msg, 'red');
 
   }
   
-  /**
-   * Prints the given informational message.
-   * @param {string} msg - The information message to print.
-   */
-  function info(msg) {
-    /*let element = document.createElement('info');
-    element.innerHTML = msg;
-    element.className = 'info';
-    document.getElementById('msg').appendChild(element); 
-    */
-
+  function PrintInfo(msg) 
+  {
     const terminal = document.getElementById('terminal');
-        appendToTerminal(`$ echo "${msg}" >> written.txt`);
-        appendToTerminal(`Текст записан: ${msg}`, "blue");
-      
+    appendToTerminal(msg, 'limegreen'); 
   }
   
-  /**
-   * Clears all messages.
-   */
-  function clearAllMessages() {  // eslint-disable-line no-unused-vars
-    document.getElementById('msg').innerHTML = '';
-  }
-
-
   // Функция для добавления текста в терминал
     function appendToTerminal(message, color = "limegreen") {
       const terminal = document.getElementById('terminal');
       const timestamp = new Date().toLocaleTimeString(); // Время действия
-      const line = `>>> %c[${timestamp}] %c${message} %c\n-----------------------\n`;
+      const line = `\n>>> [${timestamp}] ${message}\n-----------------------\n\n`;
       terminal.innerHTML += line;
-      terminal.style.cssText += `
-        --line-color: ${color};
-      `;
+
+      terminal.style.color = color;
       terminal.scrollTop = terminal.scrollHeight; // Прокрутка вниз
     }

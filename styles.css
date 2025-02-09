@@ -1,196 +1,229 @@
 /* Общие стили */
-    body {
-      font-family: 'Poppins', Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background: linear-gradient(135deg, #87CEEB, #6A5ACD);
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      box-sizing: border-box;
-    }
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: linear-gradient(135deg, #87CEEB, #6A5ACD);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
 
-    /* Стиль для контейнера содержимого */
-    #contents {
-      max-width: 600px;
-      width: 100%;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      padding: 20px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      text-align: center;
-      transition: all 0.3s ease;
-      margin-top: 80px; /* Отступ от кнопки "Меню" */
-    }
+/* Стиль для контейнера содержимого */
+#contents {
+  max-width: 600px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  transition: all 0.3s ease;
+  margin-top: 80px; /* Отступ от кнопки "Меню" */
+}
 
-    h1 {
-      font-size: 2rem;
-      margin: 0 0 20px;
-      color: #fff;
-    }
+h1 {
+  font-size: 2rem;
+  margin: 0 0 20px;
+  color: #fff;
+}
 
-    /* Контейнер для кнопки меню */
-    .menu-container {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 1000;
-    }
+/* Контейнер для кнопки меню */
+.menu-container {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 1000;
+}
 
-    /* Кнопка меню */
-    .menu-button {
-      background: #2e7d32;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+/* Кнопка меню */
+.menu-button {
+  background: #2e7d32;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-    .menu-button:hover {
-      background: #1b5e20;
-      transform: scale(1.1);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
+.menu-button:hover {
+  background: #1b5e20;
+  transform: scale(1.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
 
-    /* Выпадающее меню */
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      top: 50px; /* Расположение под кнопкой */
-      left: 0;
-      background: rgba(255, 255, 255, 0.9);
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      width: 200px;
-      z-index: 1001;
-      overflow: hidden;
-      transition: all 0.3s ease;
-    }
+/* Выпадающее меню */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 50px; /* Расположение под кнопкой */
+  left: 0;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  width: 200px;
+  z-index: 1001;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
 
-    .dropdown-menu.active {
-      display: block;
-    }
+.dropdown-menu.active {
+  display: block;
+}
 
-    .dropdown-menu button {
-      width: 100%;
-      padding: 10px 15px;
-      border: none;
-      background: transparent;
-      color: #333;
-      text-align: left;
-      cursor: pointer;
-      transition: background 0.3s ease, color 0.3s ease;
-    }
+.dropdown-menu button {
+  width: 100%;
+  padding: 10px 15px;
+  border: none;
+  background: transparent;
+  color: #333;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
 
-    .dropdown-menu button:hover {
-      background: #f0f8ff;
-      color: #000;
-    }
+.dropdown-menu button:hover {
+  background: #f0f8ff;
+  color: #000;
+}
 
-    /* Текстовое поле */
-    #secretInput {
-      width: 92%;
-      padding: 12px 20px;
-      margin: 10px 0;
-      border: 2px solid #81c784;
-      border-radius: 5px;
-      font-size: 1rem;
-      background: rgba(255, 255, 255, 0.8);
-      color: #333;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
+/* Текстовое поле */
+#secretInput {
+  width: 92%;
+  padding: 12px 20px;
+  margin: 10px 0;
+  border: 2px solid #81c784;
+  border-radius: 5px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  color: #333;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
 
-    #secretInput.hidden {
-      display: none; /* Скрыть текстовое поле */
-    }
+#secretInput.hidden {
+  display: none; /* Скрыть текстовое поле */
+}
 
-    #secretInput:focus {
-      border-color: #2e7d32;
-      box-shadow: 0 0 5px rgba(46, 125, 50, 0.5);
-      outline: none;
-    }
+#secretInput:focus {
+  border-color: #2e7d32;
+  box-shadow: 0 0 5px rgba(46, 125, 50, 0.5);
+  outline: none;
+}
 
-    /* Информационное поле */
-    #selectMenuOption {
-      width: 92%;
-      padding: 12px 20px;
-      margin: 10px 0;
-      border: 2px solid #81c784;
-      border-radius: 5px;
-      font-size: 1rem;
-      background: rgba(255, 255, 255, 0.8);
-      color: #333;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
+/* Информационное поле */
+#selectMenuOption {
+  width: 92%;
+  padding: 12px 20px;
+  margin: 10px 0;
+  border: 2px solid #81c784;
+  border-radius: 5px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  color: #333;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  overflow-wrap: break-word;
+  overflow-y: auto;
+  overflow-x: auto;
+}
 
-    #selectMenuOption.hidden {
-      display: none; /* Скрыть информационное поле */
-    }
+#selectMenuOption.hidden {
+  display: none; /* Скрыть информационное поле */
+}
 
-    /* Стили для кнопок */
-    button {
-      background: #2e7d32;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      margin: 10px 0;
-      width: 100%;
-      transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    }
+/* Стили для кнопок */
+button {
+  background: #2e7d32;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 0;
+  width: 100%;
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-    button.hidden {
-      display: none; /* Скрыть кнопку */
-    }
+button.hidden {
+  display: none; /* Скрыть кнопку */
+}
 
-    button:hover {
-      background: #1b5e20;
-      transform: scale(1.05);
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    }
+button:hover {
+  background: #1b5e20;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
 
-    /* Стиль для терминала */
-    #terminal {
-      margin-top: 20px;
-      padding: 15px;
-      background: black;
-      color: limegreen;
-      font-family: 'Courier New', monospace;
-      font-size: 1rem;
-      border-radius: 5px;
-      max-height: 300px; /* Ограничение высоты */
-      overflow-y: auto; /* Прокрутка при необходимости */
-      white-space: pre-wrap; /* Разрешаем перенос строк */
-      width: 70%;
-    }
+/* Стиль для терминала */
+#terminal {
+margin-top: 20px;
+padding: 1.5em; /* Используем em для масштабирования отступов */
+background: black;
+color: limegreen;
+font-family: 'Courier New', monospace;
+font-size: 1rem; /* Размер шрифта в rem для адаптивности */
+border-radius: 0.5rem; /* Используем rem для радиуса */
+max-height: 30vh; /* Ограничение высоты в процентах viewport */
+overflow-y: auto; /* Прокрутка при необходимости */
+overflow-wrap: break-word;
+white-space: pre-wrap; /* Разрешаем перенос строк */
+width: calc(100% - 4em); /* Ширина терминала равна ширине контейнера минус отступы */
+margin-left: auto;
+margin-right: auto;
+max-width: 600px;
+}
 
-    /* Стиль для JSON */
-    #terminal .json {
-      color: cyan;
-      font-weight: bold;
-    }
+/* Стиль для JSON */
+#terminal .json {
+  color: cyan;
+  font-weight: bold;
+}
 
-    /* Адаптивность */
-    @media (max-width: 768px) {
-      #contents {
-        padding: 15px;
-      }
-      .dropdown-menu {
-        width: 180px;
-      }
-    }
+/* Адаптивность */
+@media (max-width: 768px) {
+#terminal {
+font-size: 0.9rem; /* Уменьшаем размер шрифта на маленьких экранах */
+max-height: 15em; /* Меньшая высота на маленьких экранах */
+padding: 1em; /* Уменьшаем отступы */
+width: calc(100% - 2em); /* Уменьшаем ширину */
+}
+}
 
-    /* Футер */
-    footer {
-      text-align: center;
-      margin-top: 30px;
-      color: #fff;
-      font-size: 0.9em;
-      opacity: 0.8;
-    }
+
+
+/* Адаптивность */
+@media (max-width: 768px) {
+  #contents {
+  padding: 15px;
+  }
+  #secretInput
+  {
+  font-size: 0.9rem; /* Уменьшаем размер шрифта на маленьких экранах */
+  max-height: 15em; /* Меньшая высота на маленьких экранах */
+  padding: 1em; /* Уменьшаем отступы */
+  width: calc(100% - 2em); /* Уменьшаем ширину */
+  }
+  #selectMenuOption
+  {
+  font-size: 0.9rem; /* Уменьшаем размер шрифта на маленьких экранах */
+  max-height: 15em; /* Меньшая высота на маленьких экранах */
+  padding: 1em; /* Уменьшаем отступы */
+  width: calc(100% - 2em); /* Уменьшаем ширину */
+  }
+  .dropdown-menu {
+    width: 180px;
+  }
+}
+
+/* Футер */
+footer {
+  text-align: center;
+  margin-top: 30px;
+  color: #fff;
+  font-size: 0.9em;
+  opacity: 0.8;
+}

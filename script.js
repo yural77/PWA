@@ -2,30 +2,46 @@
 async function webAuthnCreate() 
 {
   const selectedOption = document.getElementById('selectedOptionField').value;
+  
   let LSKeyName = '';
-  if(selectedOption == 'credBlob')
-  {
-    LSKeyName = 'credBlobID';
-  }
-  else
-  {
-    LSKeyName = 'largeBlobID';
-  }
+  if(selectedOption == 'credBlob') { LSKeyName = 'credBlobID';}
+  else{ LSKeyName = 'largeBlobID';}
 
   console.log(selectedOption);
   try 
   {
     const publicKeyCredential = await createCredential(buildEnrollExtensions(selectedOption),);
     window.localStorage.setItem(LSKeyName, arrayBufferToBase64(publicKeyCredential.rawId));
-    info(
-        'Enrolled: ' + objectToString(publicKeyCredential) + '\n' +
+    PrintInfo(
+        'MainKeyData: ' + objectToString(publicKeyCredential) + '\n' +
         'Extensions: ' + extensionsOutputToString(publicKeyCredential)
         );
+
+//Вывод в терминал
+    if(publicKeyCredential.response)
+    {
+      if(selectedOption == 'credBlob' && publicKeyCredential.response.credBlob)
+      {
+        const data = new TextDecoder().decode(publicKeyCredential.response.credBlob);
+        PrintInfo('credBlobCreationStatus: ' + data);
+        if(data !== 'true') { PrintError("credBlob is not supported on this device"); }  
+      }
+      else {PrintError("credBlob is not supported on this device");}   
+      
+      if(selectedOption == 'largeBlob' && publicKeyCredential.response.largeBlob)
+        {
+          const data = new TextDecoder().decode(publicKeyCredential.response.largeBlob);
+          PrintInfo('largeBlobCreationStatuc: ' + data);
+        }
+      else {PrintError("largeBlob is not supported on this device");}  
+
+    }
+
+    else {PrintError("Something went wrong, couldn't get authentication response");}    
   } 
   catch (err) 
   {
-    //clearAllMessages();
-    error(err);
+    PrintError(err);
   }
 }
 
@@ -37,14 +53,8 @@ async function webAuthnGet(largeBlobMode)
 
   const selectedOption = document.getElementById('selectedOptionField').value;
   let LSKeyName = '';
-  if(selectedOption == 'credBlob')
-  {
-    LSKeyName = 'credBlobID';
-  }
-  else
-  {
-    LSKeyName = 'largeBlobID';
-  }
+  if(selectedOption == 'credBlob') { LSKeyName = 'credBlobID';}
+  else{ LSKeyName = 'largeBlobID';}
 
   try 
   {
@@ -64,21 +74,37 @@ async function webAuthnGet(largeBlobMode)
       extensions: buildLoginExtensions(largeBlobMode, selectedOption),
     };
     const credentialInfoAssertion = await navigator.credentials.get({publicKey});
-    info(
+    PrintInfo(
         'Login: ' + objectToString(credentialInfoAssertion) + '\n' +
         'Extensions: ' + extensionsOutputToString(credentialInfoAssertion)
         );
 
-    /*if (credentialInfoAssertion.response && credentialInfoAssertion.response.credBlob)
+    //Вывод в терминал
+    if(credentialInfoAssertion.response)
     {
-      const data = new TextDecoder().decode(credentialInfoAssertion.response.credBlob);
-      info('CREDBLOB: ' + data);
+      if(selectedOption == 'credBlob' && credentialInfoAssertion.response.credBlob)
+      {
+        const data = new TextDecoder().decode(credentialInfoAssertion.response.credBlob);
+        PrintInfo('credBlobData: ' + data);   
+      }
+      else {PrintError("credBlob is not supported on this device");}   
+      
+      if(selectedOption == 'largeBlob' && credentialInfoAssertion.response.largeBlob)
+        {
+          const data = new TextDecoder().decode(credentialInfoAssertion.response.largeBlob);
+          PrintInfo('largeBlobData: ' + data);
+        }
+      else {PrintError("largeBlob is not supported on this device");}  
+
     }
-    else {error("CREDBLOBERROR")} */
+
+    else {PrintError("Something went wrong, couldn't get authentication response");}
+    
+    
   } 
   catch (err) 
   {
-    error(err);
+    PrintError(err);
   }
 }
 
@@ -88,12 +114,6 @@ async function webAuthnGet(largeBlobMode)
 const LargeBlobMode = 
 {
   None: 'None',
-  Read: 'Read',
-  Write: 'Write',
-};
-
-const CredBlobMode = 
-{
   Read: 'Read',
   Write: 'Write',
 };
@@ -112,7 +132,7 @@ function buildEnrollExtensions(selectedOption)
   else if (selectedOption == 'credBlob') 
   {
     const buffer = new TextEncoder().encode(textToWrite);
-    return { credBlob: new TextEncoder().encode("SECRET"), };
+    return { credBlob: buffer, };
   }
   else { return {};}
 }
@@ -120,7 +140,7 @@ function buildEnrollExtensions(selectedOption)
 /**
  * Создает расширения для входа.
  */
-function buildLoginExtensions(LBmode, selectedOption, textToWrite = 'UEK Secret') 
+function buildLoginExtensions(LBmode, selectedOption, textToWrite) 
 {
   // Получаем значение из текстового поля
   const userInput = document.getElementById('secretInput').value;
@@ -162,13 +182,6 @@ function extensionsOutputToString(credentialInfoAssertion)
 }
 
 
-////////////////////////////////////////////
-
-/**
- * @param {object} optionalOverrides - a set of optional overrides for the
- *     default credential creation parameters.
- * @return {PublicKeyCredential} 
- */
 async function createCredential(additionalExtensions) 
 {
 

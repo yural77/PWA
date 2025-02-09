@@ -4,10 +4,11 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Демо</title>
+  <title>Демо credBlob / largeBlob</title>
   <link rel="stylesheet" href="styles.css">
 
 </head>
+
 
 <body>
   
@@ -21,7 +22,7 @@
   </div>
 
   <div id="contents">
-    <h1>Демо</h1>
+    <h1>Демо credBlob / largeBlob</h1>
     
     <!-- Невидимое поле для хранения выбранной опции -->
     <input type="hidden" id="selectedOptionField" value="">
@@ -38,11 +39,11 @@
     
     <!-- Кнопки (скрыты по умолчанию) -->
     <button id="createButton" class="hidden" onclick="webAuthnCreate()">
-      Записать секрет
+      Создать секрет
     </button>
     
     <button id="writeButton" class="hidden" onclick="webAuthnGet(LargeBlobMode.Write)">
-      Изменить секрет
+      Записать секрет
     </button>
     
     <button id="readButton" class="hidden" onclick="webAuthnGet(LargeBlobMode.Read)">
@@ -54,7 +55,7 @@
   <div id="terminal"></div>
 
   <!-- Добавлен футер -->
-  <footer>Разработано с ❤️</footer>
+  <footer>Разработано в УЭК</footer>
 
   <script src="script.js"></script>
   <script src="ui.js"></script>
