@@ -56,12 +56,14 @@
       // Показываем нужные кнопки в зависимости от выбранной опции
       if (option === 'credBlob') {
         mainHeader.textContent = "Демо credBlob";
+        secretInput.placeholder = "Введите ваш текст (до 255 символов)";
         createButton.textContent = "Записать секрет";
         readButton.textContent = "Прочитать секрет";
         createButton.classList.remove('hidden');
         readButton.classList.remove('hidden');
       } else if (option === 'largeBlob') {
         mainHeader.textContent = "Демо largeBlob";
+        secretInput.placeholder = "Введите ваш текст (до 255 символов)";
         createButton.textContent = "Создать секрет";
         readButton.textContent = "Прочитать секрет";
         createButton.classList.remove('hidden');
@@ -70,6 +72,7 @@
       }
       else if (option === 'PRF') {
         mainHeader.textContent = "Демо PRF";
+        secretInput.placeholder = "Введите ваш текст (минимум 32 символа)";
         createButton.textContent = "Создать ключ";
         readButton.textContent = "Сгенерировать HMAC";
         createButton.classList.remove('hidden');
