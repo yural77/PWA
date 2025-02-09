@@ -63,13 +63,17 @@
     // Функция для добавления текста в терминал
     function appendToTerminal(message, color = "limegreen") {
       const terminal = document.getElementById('terminal');
-      const timestamp = new Date().toLocaleTimeString(); // Время действия
-      const line = `%c[${timestamp}] %c${message} %c\n`;
-      terminal.innerHTML += `<span style='color: ${color};>` + line + "</span>";
-     // terminal.style.cssText += `
-     //   --line-color: ${color};
-    //  `;
-      terminal.scrollTop = terminal.scrollHeight; // Прокрутка вниз
+     const timestamp = new Date().toLocaleTimeString();
+
+    // Создаем новый span элемент
+      const span = document.createElement('span');
+      span.style.color = color; // Устанавливаем цвет
+      span.textContent = `\n>>> [${timestamp}] ${message}\n-----------------------\n\n`;
+
+    // Добавляем span в div#terminal
+       terminal.appendChild(span);
+
+       terminal.scrollTop = terminal.scrollHeight; // Прокрутка вниз
     }
 
     // Закрыть меню при клике вне его области
