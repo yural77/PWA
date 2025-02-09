@@ -107,7 +107,7 @@
       terminal.scrollTop = terminal.scrollHeight; // Прокрутка вниз
     }
 
-    function printKeyData(createdKey)
+    function printKeyData(createdKey, selectedOption)
     {
       if(createdKey.response)
         {
