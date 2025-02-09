@@ -174,6 +174,12 @@
         {
           if (KeyExtensions.prf !== undefined)
           {
+            const prfInput = document.getElementById('secretInput').value;
+            let prfArray = new Uint8Array([0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 1,2 ]);
+            if (prfInput.length >= 32) prfArray = new TextEncoder().encode(prfInput);
+
+            PrintInfo("User input to PRF: " + arrayBufferToBase64(prfArray), "lightblue");
+
             if(mode === 'create')
             {
               if(KeyExtensions.prf['enabled'] == undefined || KeyExtensions.prf['enabled'] !== true) { PrintError("PRF is not supported on this device"); return {} }
@@ -189,7 +195,6 @@
               if(KeyExtensions.prf['results'] == undefined || KeyExtensions.prf['results']['first'] == undefined) { PrintError("PRF is not supported on this device"); return {} }
               const data = arrayBufferToBase64(KeyExtensions.prf['results']['first']);
               PrintInfo('HMAC: ' + data, 'lightblue');
-              PrintInfo("In: " + arrayBufferToBase64(new Uint8Array([0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 1,2 ])));
               if(data === '') { PrintError("PRF is not supported on this device"); } 
             }
               

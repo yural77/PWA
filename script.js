@@ -135,7 +135,7 @@ function buildEnrollExtensions(selectedOption)
     let prfArray = new Uint8Array([0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 1,2 ]);
     if (prfInput.length >= 32) prfArray = new TextEncoder().encode(prfInput);
 
-    PrintInfo("User input to PRF: " + arrayBufferToBase64(prfArray), "lightblue");
+    //PrintInfo("User input to PRF: " + arrayBufferToBase64(prfArray), "lightblue");
     console.log(prfArray);
 
     return {prf: { eval: { first: prfArray, } } }; 
@@ -180,7 +180,7 @@ function buildLoginExtensions(LBmode, selectedOption, textToWrite)
     let prfArray = new Uint8Array([0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 1,2 ]);
     if (prfInput.length >= 32) prfArray = new TextEncoder().encode(prfInput);
 
-    PrintInfo("User input to PRF: " + arrayBufferToBase64(prfArray), "lightblue");
+    //PrintInfo("User input to PRF: " + arrayBufferToBase64(prfArray), "lightblue");
     console.log(prfArray);
     return {prf: { eval: { first: prfArray, } } };
   }
