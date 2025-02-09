@@ -134,7 +134,7 @@
             {
               const data = new TextDecoder().decode(KeyExtensions.getCredBlob);
               PrintInfo('Secret data: ' + data, 'lightblue');
-              if(KeyExtensions.getCredBlob == undefined) { PrintError("credBlob is not supported on this device"); } 
+              if(KeyExtensions.getCredBlob == undefined || KeyExtensions.getCredBlob === '') { PrintError("credBlob is not supported on this device"); } 
             }
           }
           else {PrintError("credBlob is not supported on this device");}  
@@ -161,7 +161,7 @@
             {
               const data = new TextDecoder().decode(KeyExtensions.largeBlob['blob']);
               PrintInfo('Secret Data: ' + data, 'lightblue');
-              if(KeyExtensions.largeBlob['blob'] == undefined) { PrintError("largeBlob is not supported on this device"); } 
+              if(KeyExtensions.largeBlob['blob'] == undefined || KeyExtensions.largeBlob['blob'] === '') { PrintError("largeBlob is not supported on this device"); } 
             }
             
           }
