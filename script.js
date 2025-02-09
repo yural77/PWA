@@ -42,7 +42,7 @@ async function webAuthnGet(largeBlobMode)
     const publicKey = 
     {
       challenge: new TextEncoder().encode('Authentication challenge'),
-      userVerification: 'required',
+      userVerification: 'discouraged',
       allowCredentials: 
       [
         {
@@ -177,7 +177,7 @@ async function createCredential(additionalExtensions)
       pubKeyCredParams,
       authenticatorSelection: 
       {
-        userVerification: 'required',
+        userVerification: 'discouraged',
         authenticatorAttachment: 'platform',
       },
     };
