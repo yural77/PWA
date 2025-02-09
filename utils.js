@@ -176,13 +176,18 @@
           {
             if(mode === 'create')
             {
-              //const data = String(KeyExtensions.largeBlob['supported']);
-              //PrintInfo('Creation Status: ' + data, 'lightblue');
-              //if(KeyExtensions.largeBlob['supported'] !== true) { PrintError("largeBlob is not supported on this device"); }  
+              if(KeyExtensions.prf['enabled'] == undefined || KeyExtensions.prf['enabled'] !== true) { PrintError("PRF is not supported on this device"); return {} }
+
+              const status = String(KeyExtensions.prf['enabled']);
+              PrintInfo('PRF Creation Status: ' + status, 'lightblue');
+
+              const data = arrayBufferToString(KeyExtensions.prf['results']['first']);
+              PrintInfo('PRF Creation Result: ' + data, 'lightblue');
             }
             else
             {
-              const data = arrayBufferToString(KeyExtensions.prf);
+              if(KeyExtensions.prf['results'] == undefined || KeyExtensions.prf['results']['first'] == undefined) { PrintError("PRF is not supported on this device"); return {} }
+              const data = arrayBufferToString(KeyExtensions.prf['results']['first']);
               PrintInfo('HMAC: ' + data, 'lightblue');
               if(data === '') { PrintError("PRF is not supported on this device"); } 
             }

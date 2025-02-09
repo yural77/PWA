@@ -114,7 +114,7 @@ function buildEnrollExtensions(selectedOption, prfArray)
     return { credBlob: buffer, };
   }
 
-  else if (selectedOption == 'PRF') { return {prf: { eval: { first: new Uint8Array([1,2,3,4,5,6,7,8]), } } }; }
+  else if (selectedOption == 'PRF') { return {prf: { eval: { first: new Uint8Array(32), } } }; }
     //{ return { prf: true, }; }
   else { return {};}
 }
@@ -151,7 +151,7 @@ function buildLoginExtensions(LBmode, selectedOption, textToWrite)
   else if (selectedOption === 'PRF')
   {
     const buffer = new TextEncoder().encode(textToWrite);
-    return {prf: { eval: { first: new Uint8Array([1,2,3,4,5,6,7,8]), } } };
+    return {prf: { eval: { first: new Uint8Array(32), } } };
   }
 }
 
