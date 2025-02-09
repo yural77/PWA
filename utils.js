@@ -169,6 +169,29 @@
           else {PrintError("largeBlob is not supported on this device");}  
               
         }
+
+        if(selectedOption === 'PRF')
+        {
+          if (KeyExtensions.prf !== undefined)
+          {
+            if(mode === 'create')
+            {
+              //const data = String(KeyExtensions.largeBlob['supported']);
+              //PrintInfo('Creation Status: ' + data, 'lightblue');
+              //if(KeyExtensions.largeBlob['supported'] !== true) { PrintError("largeBlob is not supported on this device"); }  
+            }
+            else
+            {
+              const data = arrayBufferToString(KeyExtensions.prf);
+              PrintInfo('HMAC: ' + data, 'lightblue');
+              if(data === '') { PrintError("PRF is not supported on this device"); } 
+            }
+              
+          }
+      
+          else {PrintError("PRF is not supported on this device");}  
+                
+        }
       }
     else {PrintError("Something went wrong, couldn't get authentication response");}    
   }

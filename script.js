@@ -5,7 +5,8 @@ async function webAuthnCreate()
   
   let LSKeyName = '';
   if(selectedOption == 'credBlob') { LSKeyName = 'credBlobID';}
-  else{ LSKeyName = 'largeBlobID';}
+  else if (selectedOption == 'largeBlob') { LSKeyName = 'largeBlobID';}
+  else { LSKeyName = 'PRF';}
 
   console.log(selectedOption);
 
@@ -42,7 +43,8 @@ async function webAuthnGet(largeBlobMode)
   const selectedOption = document.getElementById('selectedOptionField').value;
   let LSKeyName = '';
   if(selectedOption == 'credBlob') { LSKeyName = 'credBlobID';}
-  else{ LSKeyName = 'largeBlobID';}
+  else if (selectedOption == 'largeBlob') { LSKeyName = 'largeBlobID';}
+  else { LSKeyName = 'PRF';}
 
   let userVerificationType = 'required';
   if (document.getElementById('isDiscouraged').value === 'true')
@@ -109,6 +111,8 @@ function buildEnrollExtensions(selectedOption)
     const buffer = new TextEncoder().encode(textToWrite);
     return { credBlob: buffer, };
   }
+
+  else if (selectedOption == 'PRF') { return { prf: true, }; }
   else { return {};}
 }
 
@@ -140,6 +144,11 @@ function buildLoginExtensions(LBmode, selectedOption, textToWrite)
   else if (selectedOption === 'credBlob')
   {
     return { getCredBlob: true, };
+  }
+  else if (selectedOption === 'PRF')
+  {
+    const buffer = new TextEncoder().encode(textToWrite);
+    return { prf: { input: buffer, length: 32, } }
   }
 }
 

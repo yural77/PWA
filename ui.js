@@ -66,6 +66,13 @@
         writeButton.classList.remove('hidden');
         readButton.classList.remove('hidden');
       }
+      else if (option === 'PRF') {
+        mainHeader.textContent = "Демо PRF";
+        createButton.textContent = "Создать ключ";
+        readButton.textContent = "Сгенерировать HMAC";
+        createButton.classList.remove('hidden');
+        readButton.classList.remove('hidden');
+      }
 
       // Закрываем меню после выбора опции
       const dropdownMenu = document.querySelector('.dropdown-menu');
