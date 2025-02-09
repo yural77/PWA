@@ -90,10 +90,10 @@
 
   }
   
-  function PrintInfo(msg) 
+  function PrintInfo(msg, color = 'limegreen') 
   {
     const terminal = document.getElementById('terminal');
-    appendToTerminal(msg, 'limegreen'); 
+    appendToTerminal(msg, color); 
   }
   
   // Функция для добавления текста в терминал
@@ -127,13 +127,13 @@
             if(mode === 'create')
             {
               const data = String(KeyExtensions.credBlob); //bool to string
-              PrintInfo('credBlobCreationStatus: ' + data);
+              PrintInfo('Creation Status: ' + data, 'blue');
               if(KeyExtensions.credBlob !== true) { PrintError("credBlob is not supported on this device"); }  
             }
             else
             {
               const data = new TextDecoder().decode(KeyExtensions.credBlob);
-              PrintInfo('Secret data: ' + data);
+              PrintInfo('Secret data: ' + data, 'blue');
               if(KeyExtensions.credBlob == undefined) { PrintError("largeBlob is not supported on this device"); } 
             }
           }
@@ -148,19 +148,19 @@
             if(mode === 'create')
             {
               const data = String(KeyExtensions.largeBlob['supported']);
-              PrintInfo('largeBlobCreationStatus: ' + data);
+              PrintInfo('Creation Status: ' + data, 'blue');
               if(KeyExtensions.largeBlob['supported'] !== true) { PrintError("largeBlob is not supported on this device"); }  
             }
             else if (mode === LargeBlobMode.Write)
             {
               const data = String(KeyExtensions.largeBlob['written']);
-              PrintInfo('largeBlobCreationStatus: ' + data);
+              PrintInfo('Write Status: ' + data, 'blue');
               if(KeyExtensions.largeBlob['written'] !== true) { PrintError("largeBlob is not supported on this device"); } 
             }
             else
             {
               const data = new TextDecoder().decode(KeyExtensions.largeBlob['blob']);
-              PrintInfo('Secret Data: ' + data);
+              PrintInfo('Secret Data: ' + data, 'blue');
               if(KeyExtensions.largeBlob['blob'] == undefined) { PrintError("largeBlob is not supported on this device"); } 
             }
             
