@@ -127,9 +127,9 @@
           
           if(selectedOption === 'largeBlob')
           {
-            if (clientExtensionResults.largeBlob !== undefined && clientExtensionResults.largeBlob.blob !== undefined)
+            if (clientExtensionResults.largeBlob !== undefined)
             {
-              const data = String(clientExtensionResults.largeBlob.blob['supported']);
+              const data = String(clientExtensionResults.largeBlob['supported']);
               PrintInfo('largeBlobCreationStatus: ' + data);
             }
     
