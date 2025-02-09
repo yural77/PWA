@@ -101,9 +101,10 @@
       const terminal = document.getElementById('terminal');
       const timestamp = new Date().toLocaleTimeString(); // Время действия
       const line = `\n>>> [${timestamp}] ${message}\n-----------------------\n\n`;
-      terminal.innerHTML += line;
-
-      terminal.style.color = color;
+     // terminal.innerHTML += line;
+     //terminal.style.color = color;
+     terminal.innerHTML += `<span style='color: ${color};>` + line + "</span>";
+      
       terminal.scrollTop = terminal.scrollHeight; // Прокрутка вниз
     }
 
