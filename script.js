@@ -56,7 +56,7 @@ async function webAuthnGet(largeBlobMode)
   {
     const publicKey = 
     {
-      challenge: new TextEncoder().encode('Authentication challenge'),
+      challenge: new TextEncoder().encode('Data to sign'),
       userVerification: userVerificationType,
       allowCredentials: 
       [
