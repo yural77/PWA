@@ -18,36 +18,7 @@ async function webAuthnCreate()
         );
 
 //Вывод в терминал
-    if(createdKey.response)
-    {
-      const clientExtensionResults = createdKey.getClientExtensionResults();
-
-      if(selectedOption === 'credBlob')
-      {
-        if(clientExtensionResults.largeBlob !== undefined && clientExtensionResults.largeBlob.blob !== undefined)
-        {
-          const data = new TextDecoder().decode(createdKey.response.credBlob);
-          PrintInfo('credBlobCreationStatus: ' + data);
-          if(data !== true) { PrintError("credBlob is not supported on this device"); }  
-        }
-        else {PrintError("credBlob is not supported on this device");}  
-      }
-       
-      
-      if(selectedOption === 'largeBlob')
-      {
-        if (clientExtensionResults.largeBlob !== undefined && clientExtensionResults.largeBlob.blob !== undefined)
-        {
-          const data = new TextDecoder().decode(clientExtensionResults.largeBlob.blob['supported']);
-          PrintInfo('largeBlobCreationStatus: ' + data);
-        }
-
-        else {PrintError("largeBlob is not supported on this device");}  
-          
-      }
-    }
-
-    else {PrintError("Something went wrong, couldn't get authentication response");}    
+    printKeyData(createdKey);
   } 
   catch (err) 
   {
@@ -85,32 +56,9 @@ async function webAuthnGet(largeBlobMode)
     };
     const credentialInfoAssertion = await navigator.credentials.get({publicKey});
     PrintInfo(
-        'Login: ' + objectToString(credentialInfoAssertion) + '\n' +
+        'MainKeyData: ' + objectToString(credentialInfoAssertion) + '\n' +
         'Extensions: ' + extensionsOutputToString(credentialInfoAssertion)
-        );
-
-    //Вывод в терминал
-    if(credentialInfoAssertion.response)
-    {
-      if(selectedOption == 'credBlob' && credentialInfoAssertion.response.credBlob)
-      {
-        const data = new TextDecoder().decode(credentialInfoAssertion.response.credBlob);
-        PrintInfo('credBlobData: ' + data);   
-      }
-      else {PrintError("credBlob is not supported on this device");}   
-      
-      if(selectedOption == 'largeBlob' && credentialInfoAssertion.response.largeBlob)
-        {
-          const data = new TextDecoder().decode(credentialInfoAssertion.response.largeBlob);
-          PrintInfo('largeBlobData: ' + data);
-        }
-      else {PrintError("largeBlob is not supported on this device");}  
-
-    }
-
-    else {PrintError("Something went wrong, couldn't get authentication response");}
-    
-    
+        );    
   } 
   catch (err) 
   {

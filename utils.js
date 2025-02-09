@@ -106,3 +106,37 @@
       terminal.style.color = color;
       terminal.scrollTop = terminal.scrollHeight; // Прокрутка вниз
     }
+
+    function printKeyData(key)
+    {
+      if(createdKey.response)
+        {
+          const clientExtensionResults = createdKey.getClientExtensionResults();
+    
+          if(selectedOption === 'credBlob')
+          {
+            if(clientExtensionResults.credBlob !== undefined)
+            {
+              const data = String(clientExtensionResults.credBlob); //bool to string
+              PrintInfo('credBlobCreationStatus: ' + data);
+              if(clientExtensionResults.credBlob !== true) { PrintError("credBlob is not supported on this device"); }  
+            }
+            else {PrintError("credBlob is not supported on this device");}  
+          }
+           
+          
+          if(selectedOption === 'largeBlob')
+          {
+            if (clientExtensionResults.largeBlob !== undefined && clientExtensionResults.largeBlob.blob !== undefined)
+            {
+              const data = String(clientExtensionResults.largeBlob.blob['supported']);
+              PrintInfo('largeBlobCreationStatus: ' + data);
+            }
+    
+            else {PrintError("largeBlob is not supported on this device");}  
+              
+          }
+        }
+    
+        else {PrintError("Something went wrong, couldn't get authentication response");}    
+    }
