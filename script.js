@@ -6,7 +6,15 @@ async function webAuthnCreate()
   let LSKeyName = '';
   if(selectedOption == 'credBlob') { LSKeyName = 'credBlobID';}
   else if (selectedOption == 'largeBlob') { LSKeyName = 'largeBlobID';}
-  else { LSKeyName = 'PRF';}
+  else { 
+    const userInput = document.getElementById('secretInput').value;
+    if (userInput.length !== 0 && userInput.length < 32)
+      {
+        PrintError("User Input (salt length) for PRF must be at least 32 bytes");
+        return {}
+      }
+    LSKeyName = 'PRF';
+  }
 
   console.log(selectedOption);
 
@@ -16,11 +24,9 @@ async function webAuthnCreate()
     userVerificationType = 'discouraged';
   }
 
-  let prfArray = new Uint8Array([1,2,3,4,5,6,7,8]);
-
   try 
   {
-    const createdKey = await createCredential(buildEnrollExtensions(selectedOption, prfArray), userVerificationType);
+    const createdKey = await createCredential(buildEnrollExtensions(selectedOption), userVerificationType);
     window.localStorage.setItem(LSKeyName, arrayBufferToBase64(createdKey.rawId));
     PrintInfo(
         'MainKeyData: ' + objectToString(createdKey) + '\n' +
@@ -46,7 +52,15 @@ async function webAuthnGet(largeBlobMode)
   let LSKeyName = '';
   if(selectedOption == 'credBlob') { LSKeyName = 'credBlobID';}
   else if (selectedOption == 'largeBlob') { LSKeyName = 'largeBlobID';}
-  else { LSKeyName = 'PRF';}
+  else { 
+    const userInput = document.getElementById('secretInput').value;
+    if (userInput.length !== 0 && userInput.length < 32)
+      {
+        PrintError("User Input (salt length) for PRF must be at least 32 bytes");
+        return {}
+      }
+    LSKeyName = 'PRF';
+  }
 
   let userVerificationType = 'required';
   if (document.getElementById('isDiscouraged').value === 'true')
@@ -100,7 +114,7 @@ const LargeBlobMode =
 /**
  * Создает расширения для регистрации.
  */
-function buildEnrollExtensions(selectedOption, prfArray) 
+function buildEnrollExtensions(selectedOption) 
 {
   // Получаем значение из текстового поля
   const userInput = document.getElementById('secretInput').value;
@@ -114,7 +128,17 @@ function buildEnrollExtensions(selectedOption, prfArray)
     return { credBlob: buffer, };
   }
 
-  else if (selectedOption == 'PRF') { return {prf: { eval: { first: new Uint8Array(32), } } }; }
+  else if (selectedOption == 'PRF') 
+  { 
+    // Получаем значение из текстового поля
+    const prfInput = document.getElementById('secretInput').value;
+    let prfArray = new Uint8Array([0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 1,2 ]);
+    if (prfInput.length >= 32) prfArray = prfInput;
+
+    console.log(prfArray);
+
+    return {prf: { eval: { first: prfArray, } } }; 
+  }
     //{ return { prf: true, }; }
   else { return {};}
 }
@@ -150,8 +174,13 @@ function buildLoginExtensions(LBmode, selectedOption, textToWrite)
   }
   else if (selectedOption === 'PRF')
   {
-    const buffer = new TextEncoder().encode(textToWrite);
-    return {prf: { eval: { first: new Uint8Array(32), } } };
+    // Получаем значение из текстового поля
+    const prfInput = document.getElementById('secretInput').value;
+    let prfArray = new Uint8Array([0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 1,2 ]);
+    if (prfInput.length >= 32) prfArray = prfInput;
+
+    console.log(prfArray);
+    return {prf: { eval: { first: prfArray, } } };
   }
 }
 

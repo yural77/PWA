@@ -57,11 +57,13 @@
       if (option === 'credBlob') {
         mainHeader.textContent = "Демо credBlob";
         createButton.textContent = "Записать секрет";
+        readButton.textContent = "Прочитать секрет";
         createButton.classList.remove('hidden');
         readButton.classList.remove('hidden');
       } else if (option === 'largeBlob') {
         mainHeader.textContent = "Демо largeBlob";
         createButton.textContent = "Создать секрет";
+        readButton.textContent = "Прочитать секрет";
         createButton.classList.remove('hidden');
         writeButton.classList.remove('hidden');
         readButton.classList.remove('hidden');

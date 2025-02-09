@@ -181,13 +181,13 @@
               const status = String(KeyExtensions.prf['enabled']);
               PrintInfo('PRF Creation Status: ' + status, 'lightblue');
 
-              const data = arrayBufferToString(KeyExtensions.prf['results']['first']);
+              const data = arrayBufferToBase64(KeyExtensions.prf['results']['first']);
               PrintInfo('PRF Creation Result: ' + data, 'lightblue');
             }
             else
             {
               if(KeyExtensions.prf['results'] == undefined || KeyExtensions.prf['results']['first'] == undefined) { PrintError("PRF is not supported on this device"); return {} }
-              const data = arrayBufferToString(KeyExtensions.prf['results']['first']);
+              const data = arrayBufferToBase64(KeyExtensions.prf['results']['first']);
               PrintInfo('HMAC: ' + data, 'lightblue');
               if(data === '') { PrintError("PRF is not supported on this device"); } 
             }
