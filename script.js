@@ -26,7 +26,7 @@ async function webAuthnCreate()
 
   try 
   {
-    const createdKey = await createCredential(buildEnrollExtensions(selectedOption), userVerificationType);
+    const createdKey = await createCredential(buildKeyCreationExtensions(selectedOption), userVerificationType);
     window.localStorage.setItem(LSKeyName, arrayBufferToBase64(createdKey.rawId));
     PrintInfo(
         'MainKeyData: ' + objectToString(createdKey) + '\n' +
@@ -114,7 +114,7 @@ const LargeBlobMode =
 /**
  * Создает расширения для регистрации.
  */
-function buildEnrollExtensions(selectedOption) 
+function buildKeyCreationExtensions(selectedOption) 
 {
   // Получаем значение из текстового поля
   const userInput = document.getElementById('secretInput').value;
@@ -239,5 +239,5 @@ async function createCredential(additionalExtensions, userVerificationType)
   {
     const prfInput = document.getElementById('secretInput').value;
     if (prfInput.length >= 32) return new TextEncoder().encode(prfInput);
-    else new Uint8Array([0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 1,2 ]);
+    else return new Uint8Array([0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 0,1,2,3,4,5,6,7,8,9, 1,2 ]);
   }
