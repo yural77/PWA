@@ -18,7 +18,7 @@ async function webAuthnCreate()
         );
 
 //Вывод в терминал
-    printKeyData(createdKey);
+    printKeyData(createdKey, selectedOption);
   } 
   catch (err) 
   {
