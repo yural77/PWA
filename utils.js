@@ -110,44 +110,66 @@
     terminal.appendChild(span);
 
     terminal.scrollTop = terminal.scrollHeight; // Прокрутка вниз
-
-    //terminal.style.color = color;
-     //terminal.innerHTML += `<span style='color: ${color};>` + line + "</span>";
 }
 
       
 
-    function printKeyData(createdKey, selectedOption)
-    {
-      if(createdKey.response)
-        {
-          const clientExtensionResults = createdKey.getClientExtensionResults();
+  function printKeyData(key, selectedOption, mode)
+  {
+    if(key.response)
+      {
+        const KeyExtensions = key.getClientExtensionResults();
     
-          if(selectedOption === 'credBlob')
+        if(selectedOption === 'credBlob')
+        {
+          if(KeyExtensions.credBlob !== undefined)
           {
-            if(clientExtensionResults.credBlob !== undefined)
+            if(mode === 'create')
             {
-              const data = String(clientExtensionResults.credBlob); //bool to string
+              const data = String(KeyExtensions.credBlob); //bool to string
               PrintInfo('credBlobCreationStatus: ' + data);
-              if(clientExtensionResults.credBlob !== true) { PrintError("credBlob is not supported on this device"); }  
+              if(KeyExtensions.credBlob !== true) { PrintError("credBlob is not supported on this device"); }  
             }
-            else {PrintError("credBlob is not supported on this device");}  
+            else
+            {
+              const data = new TextDecoder().decode(KeyExtensions.credBlob);
+              PrintInfo('Secret data: ' + data);
+            }
           }
+          else {PrintError("credBlob is not supported on this device");}  
+        }
            
           
-          if(selectedOption === 'largeBlob')
+        if(selectedOption === 'largeBlob')
+        {
+          if (KeyExtensions.largeBlob !== undefined)
           {
-            if (clientExtensionResults.largeBlob !== undefined)
+            if(mode === LargeBlobMode.None)
             {
-              const data = String(clientExtensionResults.largeBlob['supported']);
+              const data = String(KeyExtensions.largeBlob['supported']);
               PrintInfo('largeBlobCreationStatus: ' + data);
-              if(clientExtensionResults.largeBlob['supported'] !== true) { PrintError("credBlob is not supported on this device"); }  
+              if(KeyExtensions.largeBlob['supported'] !== true) { PrintError("credBlob is not supported on this device"); }  
             }
-    
-            else {PrintError("largeBlob is not supported on this device");}  
-              
+            else if (mode === LargeBlobMode.Write)
+            {
+              const data = String(KeyExtensions.largeBlob['written']);
+              PrintInfo('largeBlobCreationStatus: ' + data);
+              if(KeyExtensions.largeBlob['written'] !== true) { PrintError("credBlob is not supported on this device"); } 
+            }
+            else
+            {
+              const data = String(KeyExtensions.largeBlob['blob']);
+              PrintInfo('largeBlobCreationStatus: ' + data);
+              if(KeyExtensions.largeBlob['blob'] == undefined) { PrintError("credBlob is not supported on this device"); } 
+            }
+            
           }
-        }
     
-        else {PrintError("Something went wrong, couldn't get authentication response");}    
-    }
+          else {PrintError("largeBlob is not supported on this device");}  
+              
+        }
+      }
+    else {PrintError("Something went wrong, couldn't get authentication response");}    
+  }
+
+  

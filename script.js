@@ -18,7 +18,7 @@ async function webAuthnCreate()
         );
 
 //Вывод в терминал
-    printKeyData(createdKey, selectedOption);
+    printKeyData(createdKey, selectedOption, 'create');
   } 
   catch (err) 
   {
@@ -54,11 +54,13 @@ async function webAuthnGet(largeBlobMode)
       ],
       extensions: buildLoginExtensions(largeBlobMode, selectedOption),
     };
-    const credentialInfoAssertion = await navigator.credentials.get({publicKey});
+    const assertion = await navigator.credentials.get({publicKey});
     PrintInfo(
-        'MainKeyData: ' + objectToString(credentialInfoAssertion) + '\n' +
-        'Extensions: ' + extensionsOutputToString(credentialInfoAssertion)
-        );    
+        'MainKeyData: ' + objectToString(assertion) + '\n' +
+        'Extensions: ' + extensionsOutputToString(assertion)
+        );
+        
+    printKeyData(assertion, selectedOption, largeBlobMode);
   } 
   catch (err) 
   {
