@@ -16,9 +16,11 @@ async function webAuthnCreate()
     userVerificationType = 'discouraged';
   }
 
+  let prfArray = new Uint8Array([1,2,3,4,5,6,7,8]);
+
   try 
   {
-    const createdKey = await createCredential(buildEnrollExtensions(selectedOption), userVerificationType);
+    const createdKey = await createCredential(buildEnrollExtensions(selectedOption, prfArray), userVerificationType);
     window.localStorage.setItem(LSKeyName, arrayBufferToBase64(createdKey.rawId));
     PrintInfo(
         'MainKeyData: ' + objectToString(createdKey) + '\n' +
@@ -98,11 +100,11 @@ const LargeBlobMode =
 /**
  * Создает расширения для регистрации.
  */
-function buildEnrollExtensions(selectedOption) 
+function buildEnrollExtensions(selectedOption, prfArray) 
 {
   // Получаем значение из текстового поля
   const userInput = document.getElementById('secretInput').value;
-  textToWrite = userInput || 'SecretExample'; // Запасной вариант
+  let textToWrite = userInput || 'SecretExample'; // Запасной вариант
 
   if (selectedOption == 'largeBlob') { return { largeBlob: { support: 'required', } };} 
 
@@ -112,7 +114,8 @@ function buildEnrollExtensions(selectedOption)
     return { credBlob: buffer, };
   }
 
-  else if (selectedOption == 'PRF') { return { prf: true, }; }
+  else if (selectedOption == 'PRF') { return {prf: { eval: { first: new Uint8Array([1,2,3,4,5,6,7,8]), } } }; }
+    //{ return { prf: true, }; }
   else { return {};}
 }
 
@@ -148,7 +151,7 @@ function buildLoginExtensions(LBmode, selectedOption, textToWrite)
   else if (selectedOption === 'PRF')
   {
     const buffer = new TextEncoder().encode(textToWrite);
-    return { prf: { input: buffer, length: 32, } }
+    return {prf: { eval: { first: new Uint8Array([1,2,3,4,5,6,7,8]), } } };
   }
 }
 
