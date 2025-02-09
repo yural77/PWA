@@ -85,7 +85,7 @@ async function webAuthnGet(largeBlobMode)
               window.localStorage.getItem(LSKeyName)),
         },
       ],
-      extensions: buildLoginExtensions(largeBlobMode, selectedOption),
+      extensions: buildKeyGetExtensions(largeBlobMode, selectedOption),
     };
     const assertion = await navigator.credentials.get({publicKey});
     PrintInfo(
@@ -139,7 +139,7 @@ function buildKeyCreationExtensions(selectedOption)
 /**
  * Создает расширения для входа.
  */
-function buildLoginExtensions(LBmode, selectedOption, textToWrite) 
+function buildKeyGetExtensions(LBmode, selectedOption, textToWrite) 
 {
   // Получаем значение из текстового поля
   const userInput = document.getElementById('secretInput').value;
@@ -167,7 +167,6 @@ function buildLoginExtensions(LBmode, selectedOption, textToWrite)
   }
   else if (selectedOption === 'PRF')
   {
-    console.log(prfArray);
     return {prf: { eval: { first: getPrfInput(), } } };
   }
 }
