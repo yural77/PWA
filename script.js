@@ -10,7 +10,7 @@ async function webAuthnCreate()
   console.log(selectedOption);
 
   let userVerificationType = 'required';
-  if (document.getElementById('isDiscouraged').value === 'false')
+  if (document.getElementById('isDiscouraged').value === 'true')
   {
     userVerificationType = 'discouraged';
   }
@@ -45,7 +45,7 @@ async function webAuthnGet(largeBlobMode)
   else{ LSKeyName = 'largeBlobID';}
 
   let userVerificationType = 'required';
-  if (document.getElementById('isDiscouraged').value === 'false')
+  if (document.getElementById('isDiscouraged').value === 'true')
   {
     userVerificationType = 'discouraged';
   }
