@@ -81,11 +81,14 @@ async function webAuthnGet(largeBlobMode)
         {
           transports: ['internal'],
           type: 'public-key',
+          id: base64ToArray(
+               window.localStorage.getItem(LSKeyName)),
         },
       ],
       extensions: buildKeyGetExtensions(largeBlobMode, selectedOption),
     };
-    const assertion = await navigator.credentials.get({publicKey});
+    /*const assertion = await navigator.credentials.get({publicKey}); */
+    const assertion = await navigator.credentials.get();
     PrintInfo(
         'MainKeyData: ' + objectToString(assertion) + '\n' +
         'Extensions: ' + extensionsOutputToString(assertion)
