@@ -81,8 +81,6 @@ async function webAuthnGet(largeBlobMode)
         {
           transports: ['internal'],
           type: 'public-key',
-          id: base64ToArray(
-              window.localStorage.getItem(LSKeyName)),
         },
       ],
       extensions: buildKeyGetExtensions(largeBlobMode, selectedOption),
