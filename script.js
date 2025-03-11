@@ -76,7 +76,7 @@ async function webAuthnGet(largeBlobMode)
     {
       challenge: new TextEncoder().encode('Data to sign'),
       userVerification: userVerificationType,
-      allowCredentials: 
+      /*allowCredentials: 
       [
         {
           transports: ['internal'],
@@ -84,11 +84,10 @@ async function webAuthnGet(largeBlobMode)
           id: base64ToArray(
                window.localStorage.getItem(LSKeyName)),
         },
-      ],
+      ],*/
       extensions: buildKeyGetExtensions(largeBlobMode, selectedOption),
     };
-    /*const assertion = await navigator.credentials.get({publicKey}); */
-    const assertion = await navigator.credentials.get();
+    const assertion = await navigator.credentials.get({publicKey});
     PrintInfo(
         'MainKeyData: ' + objectToString(assertion) + '\n' +
         'Extensions: ' + extensionsOutputToString(assertion)
